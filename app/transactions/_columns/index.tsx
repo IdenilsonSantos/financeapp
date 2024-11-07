@@ -1,6 +1,11 @@
 "use client";
 
-import { Transaction } from "@prisma/client";
+import {
+  Transaction,
+  TransactionCategory,
+  TransactionPaymentMethod,
+  TransactionType,
+} from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import TransactionTypeBadge from "../_components/type-badge";
 import { Button } from "@/app/_components/ui/button";
@@ -87,4 +92,32 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
       );
     },
   },
+];
+
+export const TRANSACTION_TYPE_OPTIONS = [
+  { value: TransactionType.EXPENSE, label: "Despesa" },
+  { value: TransactionType.DEPOSIT, label: "Depósito" },
+  { value: TransactionType.INVESTMENT, label: "Investimento" },
+];
+
+export const TRANSACTION_PAYMENT_METHOD_OPTIONS = [
+  { value: TransactionPaymentMethod.BANK_SLIP, label: "Boleto" },
+  { value: TransactionPaymentMethod.BANK_TRANSFER, label: "Transferência" },
+  { value: TransactionPaymentMethod.CASH, label: "Dinheiro" },
+  { value: TransactionPaymentMethod.CREDIT_CARD, label: "Cartão de Crédito" },
+  { value: TransactionPaymentMethod.DEBIT_CARD, label: "Cartão de Débito" },
+  { value: TransactionPaymentMethod.PIX, label: "Pix" },
+  { value: TransactionPaymentMethod.OTHER, label: "Outros" },
+];
+
+export const TRANSACTION_CATEGORY_OPTIONS = [
+  { value: TransactionCategory.HOUSING, label: "Habitação" },
+  { value: TransactionCategory.TRANSPORTATION, label: "Transporte" },
+  { value: TransactionCategory.FOOD, label: "Comida" },
+  { value: TransactionCategory.ENTERTAINMENT, label: "Entretenimento" },
+  { value: TransactionCategory.HEALTH, label: "Saúde" },
+  { value: TransactionCategory.UTILITY, label: "Utilidades" },
+  { value: TransactionCategory.SALARY, label: "Salário" },
+  { value: TransactionCategory.EDUCATION, label: "Educação" },
+  { value: TransactionCategory.OTHER, label: "Outros" },
 ];
