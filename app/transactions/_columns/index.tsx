@@ -1,37 +1,15 @@
 "use client";
 
-import {
-  Transaction,
-  TransactionCategory,
-  TransactionPaymentMethod,
-  TransactionType,
-} from "@prisma/client";
+import { Transaction } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import TransactionTypeBadge from "../_components/type-badge";
 import { Button } from "@/app/_components/ui/button";
-import { PencilIcon, TrashIcon } from "lucide-react";
-
-export const TRANSACTION_CATEGORY_LABEL = {
-  HOUSING: "Habitação",
-  TRANSPORTATION: "Transporte",
-  FOOD: "Comida",
-  ENTERTAINMENT: "Entretenimento",
-  HEALTH: "Saúde",
-  UTILITY: "Utilidades",
-  SALARY: "Salário",
-  EDUCATION: "Educação",
-  OTHER: "Outros",
-};
-
-export const TRANSACTION_PAYMENT_METHOD_LABEL = {
-  CREDIT_CARD: "Cartão de Crédito",
-  DEBIT_CARD: "Cartão de Débito",
-  BANK_TRANSFER: "Transferência",
-  BANK_SLIP: "Boleto",
-  CASH: "Dinheiro",
-  PIX: "Pix",
-  OTHER: "Outros",
-};
+import { TrashIcon } from "lucide-react";
+import {
+  TRANSACTION_CATEGORY_LABELS,
+  TRANSACTION_PAYMENT_METHOD_LABELS,
+} from "@/app/_constants/transactions";
+import EditTransactionButton from "@/app/_components/edit-transaction-button";
 
 export const transactionColumns: ColumnDef<Transaction>[] = [
   {
@@ -49,13 +27,13 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
     accessorKey: "category",
     header: "Categoria",
     cell: ({ row: { original: transaction } }) =>
-      TRANSACTION_CATEGORY_LABEL[transaction.category],
+      TRANSACTION_CATEGORY_LABELS[transaction.category],
   },
   {
     accessorKey: "paymentMethod",
     header: "Método de Pagamento",
     cell: ({ row: { original: transaction } }) =>
-      TRANSACTION_PAYMENT_METHOD_LABEL[transaction.paymentMethod],
+      TRANSACTION_PAYMENT_METHOD_LABELS[transaction.paymentMethod],
   },
   {
     accessorKey: "date",
@@ -79,12 +57,10 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
   {
     accessorKey: "actions",
     header: "Ações",
-    cell: () => {
+    cell: ({ row: { original: transaction } }) => {
       return (
         <div className="space-x-1">
-          <Button variant="ghost" size="icon" className="text-muted-foreground">
-            <PencilIcon />
-          </Button>
+          <EditTransactionButton transaction={transaction} />
           <Button variant="ghost" size="icon" className="text-muted-foreground">
             <TrashIcon />
           </Button>
@@ -92,32 +68,4 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
       );
     },
   },
-];
-
-export const TRANSACTION_TYPE_OPTIONS = [
-  { value: TransactionType.EXPENSE, label: "Despesa" },
-  { value: TransactionType.DEPOSIT, label: "Depósito" },
-  { value: TransactionType.INVESTMENT, label: "Investimento" },
-];
-
-export const TRANSACTION_PAYMENT_METHOD_OPTIONS = [
-  { value: TransactionPaymentMethod.BANK_SLIP, label: "Boleto" },
-  { value: TransactionPaymentMethod.BANK_TRANSFER, label: "Transferência" },
-  { value: TransactionPaymentMethod.CASH, label: "Dinheiro" },
-  { value: TransactionPaymentMethod.CREDIT_CARD, label: "Cartão de Crédito" },
-  { value: TransactionPaymentMethod.DEBIT_CARD, label: "Cartão de Débito" },
-  { value: TransactionPaymentMethod.PIX, label: "Pix" },
-  { value: TransactionPaymentMethod.OTHER, label: "Outros" },
-];
-
-export const TRANSACTION_CATEGORY_OPTIONS = [
-  { value: TransactionCategory.HOUSING, label: "Habitação" },
-  { value: TransactionCategory.TRANSPORTATION, label: "Transporte" },
-  { value: TransactionCategory.FOOD, label: "Comida" },
-  { value: TransactionCategory.ENTERTAINMENT, label: "Entretenimento" },
-  { value: TransactionCategory.HEALTH, label: "Saúde" },
-  { value: TransactionCategory.UTILITY, label: "Utilidades" },
-  { value: TransactionCategory.SALARY, label: "Salário" },
-  { value: TransactionCategory.EDUCATION, label: "Educação" },
-  { value: TransactionCategory.OTHER, label: "Outros" },
 ];
